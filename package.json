@@ -1,6 +1,6 @@
 {
   "name": "@olton/graphiql-with-extensions",
-  "version": "0.14.1",
+  "version": "1.0.0",
   "homepage": "https://github.com/olton/graphiql-with-extensions",
   "bugs": {
     "url": "https://github.com/olton/graphiql-with-extensions/issues"
