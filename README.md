@@ -48,8 +48,8 @@ need to have npm or javascript ecosystem tools (if your backend is in different 
 
 ## License
 
-graphiql-with-extensions is licensed under the [MIT License](http://opensource.org/licenses/MIT).<br>
-graphiql is licensed under the [MIT License](http://opensource.org/licenses/MIT).<br>
-Documentation is licensed under [Creative Common License](http://creativecommons.org/licenses/by/4.0/).<br>
+- graphiql-with-extensions is licensed under the [MIT License](http://opensource.org/licenses/MIT).
+- graphiql is licensed under the [MIT License](http://opensource.org/licenses/MIT).
+- Documentation is licensed under [Creative Common License](http://creativecommons.org/licenses/by/4.0/).
 
 # graphiql-with-extensions

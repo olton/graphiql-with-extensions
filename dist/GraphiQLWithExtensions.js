@@ -20,6 +20,10 @@ var _graphiqlExplorer = require('graphiql-explorer');
 
 var _graphiqlExplorer2 = _interopRequireDefault(_graphiqlExplorer);
 
+var _graphiqlCodeExporter = require('graphiql-code-exporter');
+
+var _graphiqlCodeExporter2 = _interopRequireDefault(_graphiqlCodeExporter);
+
 var _graphql = require('graphql');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -29,6 +33,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+//import '../node_modules/graphiql-code-exporter/CodeExporter.css';
+
 
 var GraphiQLWithExtensions = function (_Component) {
   _inherits(GraphiQLWithExtensions, _Component);
@@ -48,6 +54,7 @@ var GraphiQLWithExtensions = function (_Component) {
       schema: null,
       query: _this.props.defaultQuery,
       explorerIsOpen: true,
+      exporterIsOpen: false,
       disableExplorer: _this.props.disableExplorer,
       disableExporter: _this.props.disableExporter
     }, _this._handleInspectOperation = function (cm, mousePos) {
@@ -66,12 +73,10 @@ var GraphiQLWithExtensions = function (_Component) {
       var token = cm.getTokenAt(mousePos);
       var start = { line: mousePos.line, ch: token.start };
       var end = { line: mousePos.line, ch: token.end };
-      var relevantMousePos = {
+      var position = {
         start: cm.indexFromPos(start),
         end: cm.indexFromPos(end)
       };
-
-      var position = relevantMousePos;
 
       var def = parsedQuery.definitions.find(function (definition) {
         if (!definition.loc) {
@@ -114,7 +119,7 @@ var GraphiQLWithExtensions = function (_Component) {
       }
     }, _this._handleToggleExplorer = function () {
       _this.setState({ explorerIsOpen: !_this.state.explorerIsOpen });
-    }, _this._handleToggleCodeExporter = function () {
+    }, _this._handleToggleExporter = function () {
       return _this.setState({
         codeExporterIsOpen: !_this.state.codeExporterIsOpen
       });
@@ -144,8 +149,25 @@ var GraphiQLWithExtensions = function (_Component) {
 
       var _state = this.state,
           query = _state.query,
-          schema = _state.schema;
+          schema = _state.schema,
+          explorerIsOpen = _state.explorerIsOpen,
+          exporterIsOpen = _state.exporterIsOpen;
 
+      var snippets = '',
+          serverUrl = '';
+      var codeExporter = codeExporterIsVisible ? _react2.default.createElement(_graphiqlCodeExporter2.default, {
+        hideCodeExporter: this._handleToggleExporter,
+        snippets: snippets,
+        serverUrl: serverUrl,
+        context: {
+          appId: "APP_ID"
+        },
+        headers: {
+          Authorization: 'Bearer AUTH_TOKEN'
+        },
+        query: query,
+        codeMirrorTheme: 'neo'
+      }) : null;
 
       return _react2.default.createElement(
         'div',
@@ -154,8 +176,10 @@ var GraphiQLWithExtensions = function (_Component) {
           schema: schema,
           query: query,
           onEdit: this._handleEditQuery,
-          explorerIsOpen: this.state.explorerIsOpen,
-          onToggleExplorer: this._handleToggleExplorer
+          explorerIsOpen: explorerIsOpen,
+          exporterIsOpen: exporterIsOpen,
+          onToggleExplorer: this._handleToggleExplorer,
+          onToggleExporter: this._handleToggleExporter
         }),
         _react2.default.createElement(
           _graphiql2.default,
@@ -192,12 +216,13 @@ var GraphiQLWithExtensions = function (_Component) {
               title: 'Toggle Explorer'
             }),
             this.props.disableExporter ? null : _react2.default.createElement(_graphiql2.default.Button, {
-              onClick: this._handleToggleCodeExporter,
+              onClick: this._handleToggleExporter,
               label: 'Exporter',
               title: 'Toggle Code Exporter'
             })
           )
-        )
+        ),
+        codeExporter
       );
     }
   }]);

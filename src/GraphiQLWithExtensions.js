@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import GraphiQL from 'graphiql';
 import GraphiQLExplorer from 'graphiql-explorer';
+import CodeExporter from 'graphiql-code-exporter'
+//import '../node_modules/graphiql-code-exporter/CodeExporter.css';
 import {buildClientSchema, getIntrospectionQuery, parse} from 'graphql';
 
 class GraphiQLWithExtensions extends Component {
@@ -9,6 +11,7 @@ class GraphiQLWithExtensions extends Component {
     schema: null,
     query: this.props.defaultQuery,
     explorerIsOpen: true,
+    exporterIsOpen: false,
     disableExplorer: this.props.disableExplorer,
     disableExporter: this.props.disableExporter,
   };
@@ -45,12 +48,10 @@ class GraphiQLWithExtensions extends Component {
     const token = cm.getTokenAt(mousePos);
     const start = {line: mousePos.line, ch: token.start};
     const end = {line: mousePos.line, ch: token.end};
-    const relevantMousePos = {
+    const position = {
       start: cm.indexFromPos(start),
       end: cm.indexFromPos(end),
     };
-
-    const position = relevantMousePos;
 
     const def = parsedQuery.definitions.find(definition => {
       if (!definition.loc) {
@@ -107,13 +108,29 @@ class GraphiQLWithExtensions extends Component {
     this.setState({explorerIsOpen: !this.state.explorerIsOpen});
   };
 
-  _handleToggleCodeExporter = () =>
+  _handleToggleExporter = () =>
     this.setState({
       codeExporterIsOpen: !this.state.codeExporterIsOpen,
     });
 
   render() {
-    const {query, schema} = this.state;
+    const {query, schema, explorerIsOpen, exporterIsOpen} = this.state;
+    const snippets = '', serverUrl = '';
+    const codeExporter = codeExporterIsVisible ? (
+      <CodeExporter
+        hideCodeExporter={this._handleToggleExporter}
+        snippets={snippets}
+        serverUrl={serverUrl}
+        context={{
+          appId: "APP_ID"
+        }}
+        headers={{
+          Authorization: 'Bearer AUTH_TOKEN'
+        }}
+        query={query}
+        codeMirrorTheme="neo"
+      />
+    ) : null
 
     return (
       <div className="graphiql-container">
@@ -122,8 +139,10 @@ class GraphiQLWithExtensions extends Component {
             schema={schema}
             query={query}
             onEdit={this._handleEditQuery}
-            explorerIsOpen={this.state.explorerIsOpen}
+            explorerIsOpen={explorerIsOpen}
+            exporterIsOpen={exporterIsOpen}
             onToggleExplorer={this._handleToggleExplorer}
+            onToggleExporter={this._handleToggleExporter}
           />
         )}
         <GraphiQL
@@ -154,13 +173,14 @@ class GraphiQLWithExtensions extends Component {
             )}
             {this.props.disableExporter ? null : (
               <GraphiQL.Button
-                onClick={this._handleToggleCodeExporter}
+                onClick={this._handleToggleExporter}
                 label="Exporter"
                 title="Toggle Code Exporter"
               />
             )}
           </GraphiQL.Toolbar>
         </GraphiQL>
+        {codeExporter}
       </div>
     );
   }
