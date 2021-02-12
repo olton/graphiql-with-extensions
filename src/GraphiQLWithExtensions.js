@@ -175,12 +175,8 @@ class GraphiQLWithExtensions extends Component {
               hideCodeExporter={this._handleToggleExporter}
               snippets={snippets}
               serverUrl={serverUrl}
-              context={{
-                appId: "APP_ID"
-              }}
-              headers={{
-                Authorization: 'Bearer AUTH_TOKEN'
-              }}
+              context={{appId: ""}}
+              headers={{Authorization: ''}}
               query={query}
               codeMirrorTheme="neo"
               schema={schema} variables={variables}/>
