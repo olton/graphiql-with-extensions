@@ -73,7 +73,7 @@
     "watchify": "3.9.0"
   },
   "scripts": {
-    "build": "rimraf -rf dist && mkdir dist && babel src --ignore __tests__ --out-dir dist && browserify -g browserify-shim -s GraphiQLWithExtensions dist/index.js > lib\\graphiqlWithExtensions.js && browserify -g browserify-shim -t uglifyify -s GraphiQLWithExtensions dist/index.js | uglifyjs -c > lib\\graphiqlWithExtensions.min.js && xcopy node_modules\\graphiql\\graphiql.css html\\graphiqlWithExtensions.css /e /r /y",
+    "build": "rimraf -rf dist && mkdir dist && babel src --ignore __tests__ --out-dir dist && browserify -g browserify-shim -s GraphiQLWithExtensions dist/index.js > lib\\graphiqlWithExtensions.js && browserify -g browserify-shim -t uglifyify -s GraphiQLWithExtensions dist/index.js | uglifyjs -c > lib\\graphiqlWithExtensions.min.js && xcopy node_modules\\graphiql\\graphiql.css lib\\graphiqlWithExtensions.css /e /r /y",
     "check": "flow check",
     "test": "npm run lint && npm run check"
   },

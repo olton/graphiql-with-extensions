@@ -39,7 +39,7 @@
 }
 
 .graphiql-container .title em {
-  font-family: georgia, serif;
+  font-family: georgia;
   font-size: 19px;
 }
 
@@ -373,7 +373,7 @@
 .graphiql-container .toolbar-select-options > li {
   cursor: pointer;
   display: block;
-  margin: 0;
+  margin: none;
   max-width: 300px;
   overflow: hidden;
   padding: 2px 20px 4px 11px;
@@ -441,7 +441,7 @@
   line-height: 16px;
   max-height: 48px;
   overflow: hidden;
-  text-overflow: ellipsis;
+  text-overflow: -o-ellipsis-lastline;
 }
 
 .CodeMirror-hint-information .content p:first-child {
@@ -513,11 +513,11 @@ div.CodeMirror-lint-tooltip > * + * {
     0 1px 1px rgba(0, 0, 0, 0.2),
     inset 0 0 0 1px rgba(0, 0, 0, 0.1);
   color: white;
-  font-family: arial, serif;
+  font-family: arial;
   font-size: 12px;
   line-height: 0;
   margin: 0 3px;
-  padding: 0 4px 1px;
+  padding: 0px 4px 1px;
   text-shadow: 0 -1px rgba(0, 0, 0, 0.1);
 }
 
@@ -1248,7 +1248,7 @@ span.CodeMirror-selectedtext { background: none; }
 .CodeMirror-foldmarker {
   color: blue;
   cursor: pointer;
-  font-family: arial, serif;
+  font-family: arial;
   line-height: .3;
   text-shadow: #b9f 1px 1px 2px, #b9f -1px -1px 2px, #b9f 1px -1px 2px, #b9f -1px 1px 2px;
 }
@@ -1518,10 +1518,11 @@ span.CodeMirror-selectedtext { background: none; }
   font-family: 'Consolas', 'Inconsolata', 'Droid Sans Mono', 'Monaco', monospace;
   font-size: 13px;
   list-style: none;
-  margin: 0 0 0 -6px;
+  margin-left: -6px;
+  margin: 0;
   max-height: 14.5em;
-  overflow: hidden;
   overflow-y: auto;
+  overflow: hidden;
   padding: 0;
   position: absolute;
   z-index: 10;
