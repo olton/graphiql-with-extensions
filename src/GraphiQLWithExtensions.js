@@ -116,7 +116,7 @@ class GraphiQLWithExtensions extends Component {
   render() {
     const {query, schema, explorerIsOpen, exporterIsOpen} = this.state;
     const snippets = '', serverUrl = '';
-    const codeExporter = codeExporterIsVisible ? (
+    const codeExporter = exporterIsOpen ? (
       <CodeExporter
         hideCodeExporter={this._handleToggleExporter}
         snippets={snippets}
