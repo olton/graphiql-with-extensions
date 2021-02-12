@@ -121,7 +121,7 @@ var GraphiQLWithExtensions = function (_Component) {
       _this.setState({ explorerIsOpen: !_this.state.explorerIsOpen });
     }, _this._handleToggleExporter = function () {
       return _this.setState({
-        codeExporterIsOpen: !_this.state.codeExporterIsOpen
+        exporterIsOpen: !_this.state.exporterIsOpen
       });
     }, _temp), _possibleConstructorReturn(_this, _ret);
   }
@@ -167,7 +167,11 @@ var GraphiQLWithExtensions = function (_Component) {
         },
         query: query,
         codeMirrorTheme: 'neo'
-      }) : null;
+      }) : _react2.default.createElement(
+        'div',
+        null,
+        '123'
+      );
 
       return _react2.default.createElement(
         'div',

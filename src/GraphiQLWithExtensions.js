@@ -110,7 +110,7 @@ class GraphiQLWithExtensions extends Component {
 
   _handleToggleExporter = () =>
     this.setState({
-      codeExporterIsOpen: !this.state.codeExporterIsOpen,
+      exporterIsOpen: !this.state.exporterIsOpen,
     });
 
   render() {
@@ -130,7 +130,7 @@ class GraphiQLWithExtensions extends Component {
         query={query}
         codeMirrorTheme="neo"
       />
-    ) : null
+    ) : (<div>123</div>);
 
     return (
       <div className="graphiql-container">
