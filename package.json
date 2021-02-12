@@ -1,21 +1,19 @@
 {
-  "name": "graphiql-with-extensions",
-  "version": "0.14.0",
-  "homepage": "https://github.com/onegraph/graphiql-with-extensions",
+  "name": "@olton/graphiql-with-extensions",
+  "version": "0.14.1",
+  "homepage": "https://github.com/olton/graphiql-with-extensions",
   "bugs": {
-    "url": "https://github.com/onegraph/graphiql-with-extensions/issues"
+    "url": "https://github.com/olton/graphiql-with-extensions/issues"
   },
   "repository": {
     "type": "git",
-    "url": "http://github.com/onegraph/graphiql-with-extensions.git"
+    "url": "http://github.com/olton/graphiql-with-extensions.git"
   },
-  "license": "SEE LICENSE IN LICENSE",
+  "license": "MIT",
   "main": "dist/index.js",
   "files": [
     "dist",
-    "graphiqlWithExtensions.js",
-    "graphiqlWithExtensions.min.js",
-    "graphiqlWithExtensions.css",
+    "lib",
     "README.md",
     "LICENSE"
   ],
@@ -75,7 +73,7 @@
     "rimraf": "^2.6.2"
   },
   "scripts": {
-    "build": "rimraf -rf dist && mkdir dist && babel src --ignore __tests__ --out-dir dist && browserify -g browserify-shim -s GraphiQLWithExtensions dist/index.js > html\\graphiqlWithExtensions.js && browserify -g browserify-shim -t uglifyify -s GraphiQLWithExtensions dist/index.js | uglifyjs -c > html\\graphiqlWithExtensions.min.js && xcopy node_modules\\graphiql\\graphiql.css html\\graphiqlWithExtensions.css /e /r /y",
+    "build": "rimraf -rf dist && mkdir dist && babel src --ignore __tests__ --out-dir dist && browserify -g browserify-shim -s GraphiQLWithExtensions dist/index.js > lib\\graphiqlWithExtensions.js && browserify -g browserify-shim -t uglifyify -s GraphiQLWithExtensions dist/index.js | uglifyjs -c > lib\\graphiqlWithExtensions.min.js && xcopy node_modules\\graphiql\\graphiql.css html\\graphiqlWithExtensions.css /e /r /y",
     "check": "flow check",
     "test": "npm run lint && npm run check"
   },

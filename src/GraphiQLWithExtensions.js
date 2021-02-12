@@ -8,8 +8,9 @@ class GraphiQLWithExtensions extends Component {
   state = {
     schema: null,
     query: this.props.defaultQuery,
-    explorerIsOpen: false,
+    explorerIsOpen: true,
     disableExplorer: this.props.disableExplorer,
+    disableExporter: this.props.disableExporter,
   };
 
   componentDidMount() {
@@ -149,6 +150,13 @@ class GraphiQLWithExtensions extends Component {
                 onClick={this._handleToggleExplorer}
                 label="Explorer"
                 title="Toggle Explorer"
+              />
+            )}
+            {this.props.disableExporter ? null : (
+              <GraphiQL.Button
+                onClick={this._handleToggleCodeExporter}
+                label="Exporter"
+                title="Toggle Code Exporter"
               />
             )}
           </GraphiQL.Toolbar>
