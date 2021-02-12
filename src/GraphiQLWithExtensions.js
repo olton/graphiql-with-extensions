@@ -2,8 +2,7 @@ import React, {Component} from 'react';
 import GraphiQL from 'graphiql';
 import GraphiQLExplorer from 'graphiql-explorer';
 import CodeExporter from 'graphiql-code-exporter';
-import snippets from 'graphiql-code-exporter/lib/snippets/javascript/fetch'
-//import '../node_modules/graphiql-code-exporter/CodeExporter.css';
+import defaultSnippets from 'graphiql-code-exporter/lib/snippets/javascript/fetch'
 import {buildClientSchema, getIntrospectionQuery, parse} from 'graphql';
 
 class GraphiQLWithExtensions extends Component {
@@ -119,6 +118,19 @@ class GraphiQLWithExtensions extends Component {
     const serverUrl = this.props.serverUrl;
     const variables = '';
 
+    const codeExporter = exporterIsOpen ? (
+      <CodeExporter
+        hideCodeExporter={this._handleToggleExporter}
+        snippets={defaultSnippets}
+        serverUrl={serverUrl}
+        context={{appId: ""}}
+        variables={''}
+        headers={{}}
+        query={query}
+        codeMirrorTheme="neo"
+      />
+    ) : null;
+
     return (
       <div className="graphiql-container">
         {
@@ -128,7 +140,6 @@ class GraphiQLWithExtensions extends Component {
               query={query}
               onEdit={this._handleEditQuery}
               explorerIsOpen={explorerIsOpen}
-              exporterIsOpen={exporterIsOpen}
               onToggleExplorer={this._handleToggleExplorer}
               onToggleExporter={this._handleToggleExporter}
             />
@@ -169,19 +180,7 @@ class GraphiQLWithExtensions extends Component {
             )}
           </GraphiQL.Toolbar>
         </GraphiQL>
-        {
-          this.props.disableExporter ? null : (
-            <CodeExporter
-              hideCodeExporter={this._handleToggleExporter}
-              snippets={snippets}
-              serverUrl={serverUrl}
-              context={{appId: ""}}
-              headers={{Authorization: ''}}
-              query={query}
-              codeMirrorTheme="neo"
-              schema={schema} variables={variables}/>
-          )
-        }
+        {this.props.disableExporter ? null : codeExporter}
       </div>
     );
   }
