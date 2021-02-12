@@ -94,16 +94,19 @@ class GraphiQLWithExtensions extends Component {
   };
 
   _handleEditVariables = variables => {
-    if (this.props.onEditVariables) {this.props.onEditVariables(variables);}
+    if (this.props.onEditVariables)
+      this.props.onEditVariables(variables);
   };
 
   _handleEditOperationName = operation => {
     if (this.props.onEditOperationName)
-      {this.props.onEditOperationName(operation);}
+      this.props.onEditOperationName(operation);
   };
 
   _handleToggleExplorer = () => {
-    this.setState({explorerIsOpen: !this.state.explorerIsOpen});
+    this.setState({
+      explorerIsOpen: !this.state.explorerIsOpen
+    });
   };
 
   _handleToggleExporter = () =>
@@ -113,15 +116,14 @@ class GraphiQLWithExtensions extends Component {
 
   render() {
     const {query, schema, explorerIsOpen, exporterIsOpen} = this.state;
-    const serverUrl = this.props.serverUrl;
 
     const codeExporter = exporterIsOpen ? (
       <CodeExporter
         hideCodeExporter={this._handleToggleExporter}
         snippets={defaultSnippets}
-        serverUrl={serverUrl}
+        serverUrl={this.props.serverUrl}
         context={{appId: ""}}
-        variables={''}
+        variables={this.props.variables}
         headers={{}}
         query={query}
         codeMirrorTheme="neo"
