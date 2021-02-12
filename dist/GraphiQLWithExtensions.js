@@ -24,9 +24,9 @@ var _graphiqlCodeExporter = require('graphiql-code-exporter');
 
 var _graphiqlCodeExporter2 = _interopRequireDefault(_graphiqlCodeExporter);
 
-var _fetch = require('graphiql-code-exporter/lib/snippets/javascript/fetch');
+var _snippets = require('graphiql-code-exporter/lib/snippets');
 
-var _fetch2 = _interopRequireDefault(_fetch);
+var _snippets2 = _interopRequireDefault(_snippets);
 
 var _graphql = require('graphql');
 
@@ -154,11 +154,10 @@ var GraphiQLWithExtensions = function (_Component) {
           exporterIsOpen = _state.exporterIsOpen;
 
       var serverUrl = this.props.serverUrl;
-      var variables = '';
 
       var codeExporter = exporterIsOpen ? _react2.default.createElement(_graphiqlCodeExporter2.default, {
         hideCodeExporter: this._handleToggleExporter,
-        snippets: _fetch2.default,
+        snippets: _snippets2.default,
         serverUrl: serverUrl,
         context: { appId: "" },
         variables: '',

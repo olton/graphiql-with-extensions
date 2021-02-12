@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import GraphiQL from 'graphiql';
 import GraphiQLExplorer from 'graphiql-explorer';
 import CodeExporter from 'graphiql-code-exporter';
-import defaultSnippets from 'graphiql-code-exporter/lib/snippets/javascript/fetch'
+import defaultSnippets from 'graphiql-code-exporter/lib/snippets'
 import {buildClientSchema, getIntrospectionQuery, parse} from 'graphql';
 
 class GraphiQLWithExtensions extends Component {
@@ -114,7 +114,6 @@ class GraphiQLWithExtensions extends Component {
   render() {
     const {query, schema, explorerIsOpen, exporterIsOpen} = this.state;
     const serverUrl = this.props.serverUrl;
-    const variables = '';
 
     const codeExporter = exporterIsOpen ? (
       <CodeExporter
