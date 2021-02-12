@@ -41,17 +41,17 @@ class GraphiQLWithExtensions extends Component {
       return null;
     }
 
-    var token = cm.getTokenAt(mousePos);
-    var start = {line: mousePos.line, ch: token.start};
-    var end = {line: mousePos.line, ch: token.end};
-    var relevantMousePos = {
+    const token = cm.getTokenAt(mousePos);
+    const start = {line: mousePos.line, ch: token.start};
+    const end = {line: mousePos.line, ch: token.end};
+    const relevantMousePos = {
       start: cm.indexFromPos(start),
       end: cm.indexFromPos(end),
     };
 
-    var position = relevantMousePos;
+    const position = relevantMousePos;
 
-    var def = parsedQuery.definitions.find(definition => {
+    const def = parsedQuery.definitions.find(definition => {
       if (!definition.loc) {
         console.log('Missing location information for definition');
         return false;
@@ -68,38 +68,38 @@ class GraphiQLWithExtensions extends Component {
       return null;
     }
 
-    var operationKind =
+    const operationKind =
       def.kind === 'OperationDefinition'
         ? def.operation
         : def.kind === 'FragmentDefinition'
         ? 'fragment'
         : 'unknown';
 
-    var operationName =
-      def.kind === 'OperationDefinition' && !!def.name
+    const operationName =
+      def.kind === 'OperationDefinition' && Boolean(def.name)
         ? def.name.value
-        : def.kind === 'FragmentDefinition' && !!def.name
+        : def.kind === 'FragmentDefinition' && Boolean(def.name)
         ? def.name.value
         : 'unknown';
 
-    var selector = `.graphiql-explorer-root #${operationKind}-${operationName}`;
+    const selector = `.graphiql-explorer-root #${operationKind}-${operationName}`;
 
-    var el = document.querySelector(selector);
+    const el = document.querySelector(selector);
     el && el.scrollIntoView();
   };
 
   _handleEditQuery = (query: string): void => {
     this.setState({query});
-    if (this.props.onEditQuery) this.props.onEditQuery(query);
+    if (this.props.onEditQuery) {this.props.onEditQuery(query);}
   };
 
   _handleEditVariables = variables => {
-    if (this.props.onEditVariables) this.props.onEditVariables(variables);
+    if (this.props.onEditVariables) {this.props.onEditVariables(variables);}
   };
 
   _handleEditOperationName = operation => {
     if (this.props.onEditOperationName)
-      this.props.onEditOperationName(operation);
+      {this.props.onEditOperationName(operation);}
   };
 
   _handleToggleExplorer = () => {
