@@ -117,7 +117,7 @@ class GraphiQLWithExtensions extends Component {
   render() {
     const {query, schema, explorerIsOpen, exporterIsOpen} = this.state;
     const serverUrl = this.props.serverUrl;
-    const variables = [];
+    const variables = '';
 
     return (
       <div className="graphiql-container">
