@@ -10,6 +10,7 @@ class GraphiQLWithExtensions extends Component {
   state = {
     schema: null,
     query: this.props.query,
+    variables: '',
     explorerIsOpen: true,
     exporterIsOpen: false,
   };
@@ -89,18 +90,15 @@ class GraphiQLWithExtensions extends Component {
   };
 
   _handleEditQuery = (query: string): void => {
+    if (this.props.onEditQuery)
+      this.props.onEditQuery(query);
     this.setState({query});
-    if (this.props.onEditQuery) {this.props.onEditQuery(query);}
   };
 
   _handleEditVariables = variables => {
     if (this.props.onEditVariables)
       this.props.onEditVariables(variables);
-  };
-
-  _handleEditOperationName = operation => {
-    if (this.props.onEditOperationName)
-      this.props.onEditOperationName(operation);
+    this.setState({variables});
   };
 
   _handleToggleExplorer = () => {
@@ -115,19 +113,17 @@ class GraphiQLWithExtensions extends Component {
     });
 
   render() {
-    const {query, schema, explorerIsOpen, exporterIsOpen} = this.state;
+    const {query, schema, explorerIsOpen, exporterIsOpen, variables} = this.state;
 
     const codeExporter = exporterIsOpen ? (
       <CodeExporter
         hideCodeExporter={this._handleToggleExporter}
         snippets={defaultSnippets}
         serverUrl={this.props.serverUrl}
-        context={{appId: ""}}
-        variables={this.props.variables}
+        variables={variables}
         headers={{}}
         query={query}
-        codeMirrorTheme="neo"
-        schema={schema}/>
+        codeMirrorTheme="neo"/>
     ) : null;
 
     return (
@@ -150,8 +146,7 @@ class GraphiQLWithExtensions extends Component {
           schema={schema}
           query={query}
           onEditQuery={this._handleEditQuery}
-          onEditVariables={this._handleEditVariables}
-          onEditOperationName={this._handleEditOperationName}>
+          onEditVariables={this._handleEditVariables}>
           <GraphiQL.Toolbar>
             <GraphiQL.Button
               onClick={() => this._graphiql.handlePrettifyQuery()}

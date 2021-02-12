@@ -55,6 +55,7 @@ var GraphiQLWithExtensions = function (_Component) {
     return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = GraphiQLWithExtensions.__proto__ || Object.getPrototypeOf(GraphiQLWithExtensions)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
       schema: null,
       query: _this.props.query,
+      variables: '',
       explorerIsOpen: true,
       exporterIsOpen: false
     }, _this._handleInspectOperation = function (cm, mousePos) {
@@ -105,14 +106,11 @@ var GraphiQLWithExtensions = function (_Component) {
       var el = document.querySelector(selector);
       el && el.scrollIntoView();
     }, _this._handleEditQuery = function (query) {
+      if (_this.props.onEditQuery) _this.props.onEditQuery(query);
       _this.setState({ query: query });
-      if (_this.props.onEditQuery) {
-        _this.props.onEditQuery(query);
-      }
     }, _this._handleEditVariables = function (variables) {
       if (_this.props.onEditVariables) _this.props.onEditVariables(variables);
-    }, _this._handleEditOperationName = function (operation) {
-      if (_this.props.onEditOperationName) _this.props.onEditOperationName(operation);
+      _this.setState({ variables: variables });
     }, _this._handleToggleExplorer = function () {
       _this.setState({
         explorerIsOpen: !_this.state.explorerIsOpen
@@ -149,19 +147,18 @@ var GraphiQLWithExtensions = function (_Component) {
           query = _state.query,
           schema = _state.schema,
           explorerIsOpen = _state.explorerIsOpen,
-          exporterIsOpen = _state.exporterIsOpen;
+          exporterIsOpen = _state.exporterIsOpen,
+          variables = _state.variables;
 
 
       var codeExporter = exporterIsOpen ? _react2.default.createElement(_graphiqlCodeExporter2.default, {
         hideCodeExporter: this._handleToggleExporter,
         snippets: _snippets2.default,
         serverUrl: this.props.serverUrl,
-        context: { appId: "" },
-        variables: this.props.variables,
+        variables: variables,
         headers: {},
         query: query,
-        codeMirrorTheme: 'neo',
-        schema: schema }) : null;
+        codeMirrorTheme: 'neo' }) : null;
 
       return _react2.default.createElement(
         'div',
@@ -184,8 +181,7 @@ var GraphiQLWithExtensions = function (_Component) {
             schema: schema,
             query: query,
             onEditQuery: this._handleEditQuery,
-            onEditVariables: this._handleEditVariables,
-            onEditOperationName: this._handleEditOperationName },
+            onEditVariables: this._handleEditVariables },
           _react2.default.createElement(
             _graphiql2.default.Toolbar,
             null,
