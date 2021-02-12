@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
 import GraphiQL from 'graphiql';
 import GraphiQLExplorer from 'graphiql-explorer';
-import CodeExporter from 'graphiql-code-exporter'
+import CodeExporter from 'graphiql-code-exporter';
+import snippets from 'graphiql-code-exporter/lib/snippets/javascript/fetch'
 //import '../node_modules/graphiql-code-exporter/CodeExporter.css';
 import {buildClientSchema, getIntrospectionQuery, parse} from 'graphql';
 
@@ -115,36 +116,24 @@ class GraphiQLWithExtensions extends Component {
 
   render() {
     const {query, schema, explorerIsOpen, exporterIsOpen} = this.state;
-    const snippets = '', serverUrl = '';
-    const codeExporter = exporterIsOpen ? (
-      <CodeExporter
-        hideCodeExporter={this._handleToggleExporter}
-        snippets={snippets}
-        serverUrl={serverUrl}
-        context={{
-          appId: "APP_ID"
-        }}
-        headers={{
-          Authorization: 'Bearer AUTH_TOKEN'
-        }}
-        query={query}
-        codeMirrorTheme="neo"
-      />
-    ) : (<div>123</div>);
+    const serverUrl = this.props.serverUrl;
+    const variables = [];
 
     return (
       <div className="graphiql-container">
-        {this.props.disableExplorer ? null : (
-          <GraphiQLExplorer
-            schema={schema}
-            query={query}
-            onEdit={this._handleEditQuery}
-            explorerIsOpen={explorerIsOpen}
-            exporterIsOpen={exporterIsOpen}
-            onToggleExplorer={this._handleToggleExplorer}
-            onToggleExporter={this._handleToggleExporter}
-          />
-        )}
+        {
+          this.props.disableExplorer ? null : (
+            <GraphiQLExplorer
+              schema={schema}
+              query={query}
+              onEdit={this._handleEditQuery}
+              explorerIsOpen={explorerIsOpen}
+              exporterIsOpen={exporterIsOpen}
+              onToggleExplorer={this._handleToggleExplorer}
+              onToggleExporter={this._handleToggleExporter}
+            />
+          )
+        }
         <GraphiQL
           ref={ref => (this._graphiql = ref)}
           fetcher={this.props.fetcher}
@@ -180,7 +169,23 @@ class GraphiQLWithExtensions extends Component {
             )}
           </GraphiQL.Toolbar>
         </GraphiQL>
-        {codeExporter}
+        {
+          this.props.disableExporter ? null : (
+            <CodeExporter
+              hideCodeExporter={this._handleToggleExporter}
+              snippets={snippets}
+              serverUrl={serverUrl}
+              context={{
+                appId: "APP_ID"
+              }}
+              headers={{
+                Authorization: 'Bearer AUTH_TOKEN'
+              }}
+              query={query}
+              codeMirrorTheme="neo"
+              schema={schema} variables={variables}/>
+          )
+        }
       </div>
     );
   }
