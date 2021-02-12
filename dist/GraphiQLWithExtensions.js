@@ -56,9 +56,7 @@ var GraphiQLWithExtensions = function (_Component) {
       schema: null,
       query: _this.props.defaultQuery,
       explorerIsOpen: true,
-      exporterIsOpen: false,
-      disableExplorer: _this.props.disableExplorer,
-      disableExporter: _this.props.disableExporter
+      exporterIsOpen: false
     }, _this._handleInspectOperation = function (cm, mousePos) {
       var parsedQuery = void 0;
       try {
@@ -82,7 +80,7 @@ var GraphiQLWithExtensions = function (_Component) {
 
       var def = parsedQuery.definitions.find(function (definition) {
         if (!definition.loc) {
-          console.log('Missing location information for definition');
+          console.warn('Missing location information for definition');
           return false;
         }
 
@@ -166,8 +164,8 @@ var GraphiQLWithExtensions = function (_Component) {
         variables: '',
         headers: {},
         query: query,
-        codeMirrorTheme: 'neo'
-      }) : null;
+        codeMirrorTheme: 'neo',
+        schema: schema }) : null;
 
       return _react2.default.createElement(
         'div',

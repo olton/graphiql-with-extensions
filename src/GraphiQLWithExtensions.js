@@ -12,8 +12,6 @@ class GraphiQLWithExtensions extends Component {
     query: this.props.defaultQuery,
     explorerIsOpen: true,
     exporterIsOpen: false,
-    disableExplorer: this.props.disableExplorer,
-    disableExporter: this.props.disableExporter,
   };
 
   componentDidMount() {
@@ -55,7 +53,7 @@ class GraphiQLWithExtensions extends Component {
 
     const def = parsedQuery.definitions.find(definition => {
       if (!definition.loc) {
-        console.log('Missing location information for definition');
+        console.warn('Missing location information for definition');
         return false;
       }
 
@@ -128,7 +126,7 @@ class GraphiQLWithExtensions extends Component {
         headers={{}}
         query={query}
         codeMirrorTheme="neo"
-      />
+        schema={schema}/>
     ) : null;
 
     return (
