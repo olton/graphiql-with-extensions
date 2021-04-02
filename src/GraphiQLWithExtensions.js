@@ -27,7 +27,7 @@ class GraphiQLWithExtensions extends Component {
           'Shift-Alt-LeftClick': this._handleInspectOperation,
         });
 
-        this.setState({schema: buildClientSchema(result.data)});
+        if (result.data) this.setState({schema: buildClientSchema(result.data)});
       });
   }
 

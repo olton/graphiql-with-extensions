@@ -135,7 +135,7 @@ var GraphiQLWithExtensions = function (_Component) {
           'Shift-Alt-LeftClick': _this2._handleInspectOperation
         }));
 
-        _this2.setState({ schema: (0, _graphql.buildClientSchema)(result.data) });
+        if (result.data) _this2.setState({ schema: (0, _graphql.buildClientSchema)(result.data) });
       });
     }
   }, {
